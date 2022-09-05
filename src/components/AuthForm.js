@@ -1,8 +1,10 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import { observer } from "mobx-react";
 // or less ideally
-import {Button, Form, ProgressBar} from 'react-bootstrap';
+import { Button, Form, ProgressBar } from 'react-bootstrap';
 import AuthContext from "../stores/AuthStore";
+import CounterDisplay from "./CounterDisplay";
+import { Link } from "react-router-dom";
 /* Use class component here does not makes sense.
 Just want to show how to use our Mobx Context with a class component
 in case you do need.
@@ -11,24 +13,29 @@ class AuthForm extends Component {
     /* Make available the context to the whole class via this.context */
     static contextType = AuthContext;
 
-    login =async () => {
+
+    login = async () => {
         await this.context.doLogin();
     };
-    getComments =async () => {
+    getComments = async () => {
         await this.context.doGetComments();
     };
 
     render() {
-        if (this.context.loading===true) {
+        if (this.context.loading === true) {
             return (<ProgressBar animated now={100} />);
         }
         return (
             <Form>
                 <h3>{this.context.loading.toString()}</h3>
-                {this.context.data !=={} &&
-                <pre>
-                    {this.context.data}
-                </pre>
+                <CounterDisplay />
+                <nav>
+                    <Link to="/counter">Compteur</Link>
+                </nav>
+                {this.context.data !== {} &&
+                    <code>
+                        {this.context.data}
+                    </code>
                 }
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
@@ -45,10 +52,10 @@ class AuthForm extends Component {
                 <Form.Group className="mb-3" controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="Check me out" />
                 </Form.Group>
-                <Button variant="primary"  onClick={this.login}>
+                <Button variant="primary" onClick={this.login}>
                     Submit
                 </Button>
-                <Button variant="secondary"  onClick={this.getComments}>
+                <Button variant="secondary" onClick={this.getComments}>
                     Commentaires
                 </Button>
             </Form>

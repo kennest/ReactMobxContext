@@ -4,41 +4,43 @@ import AuthService from "../services/AuthService";
 
 class AuthStore {
     auth = false;
-    loading=false;
-    data=null;
+    loading = false;
+    data = null;
 
     doLogin = async () => {
-        this.loading=true;
-        await AuthService.attemptToLogin().then((value)=>{
+        this.loading = true;
+        await AuthService.attemptToLogin().then((value) => {
+            console.log("Data Fetched...");
+            console.table(value);
             this.auth = true;
-            this.loading=false;
-             this.data = value;
-        }).catch(()=>{
+            this.loading = false;
+            this.data = value;
+        }).catch(() => {
             this.auth = false;
-            this.loading=false;
+            this.loading = false;
         });
-        this.loading=false;
+        this.loading = false;
     };
     doGetComments = async () => {
-        this.loading=true;
-        await AuthService.getUserComments().then((value)=>{
+        this.loading = true;
+        await AuthService.getUserComments().then((value) => {
             this.auth = true;
-            this.loading=false;
-             this.data = value;
-        }).catch(()=>{
+            this.loading = false;
+            this.data = value;
+        }).catch(() => {
             this.auth = false;
-            this.loading=false;
+            this.loading = false;
         });
-        this.loading=false;
+        this.loading = false;
     };
 }
 
 decorate(AuthStore, {
     auth: observable,
-    loading:observable,
-    data:observable,
+    loading: observable,
+    data: observable,
     doLogin: action,
-    doGetComments:action
+    doGetComments: action
 });
 
 /* Combine Mobx state+actions with context API */

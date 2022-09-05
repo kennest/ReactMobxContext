@@ -1,6 +1,6 @@
 const attemptToLogin = async () => {
     let response;
-    await fetch('https://jsonplaceholder.typicode.com/users/1')
+    await fetch('http://127.0.0.1:8000/api/v1/organization/')
         .then(resp =>
             resp.json()
         )
@@ -15,7 +15,7 @@ const attemptToLogin = async () => {
 
 const getUserComments = async () => {
     let response;
-    await fetch('https://jsonplaceholder.typicode.com/comments')
+    await fetch('http://127.0.0.1:8000/api/v1/project/')
         .then(resp =>
             resp.json()
         )
@@ -28,4 +28,4 @@ const getUserComments = async () => {
     return response;
 };
 
-export default {attemptToLogin,getUserComments}
+export default { attemptToLogin, getUserComments }
